@@ -1,6 +1,7 @@
 # 🎯 Number Guessing Game
 
 A fun terminal-based number guessing game written in Python. Made as a Day 2 Python learning project!
+(My first attempt at building something fun while learning python)
 
 ---
 
