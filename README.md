@@ -35,14 +35,9 @@ A fun terminal-based number guessing game written in Python. Made as a Day 2 Pyt
 ### Running the Game
 
 ```bash
-# Clone the repo
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-
-# Navigate into the folder
-cd YOUR_REPO_NAME
-
-# Run the game!
-python 05_Trying\ a\ text\ game.py
+git clone https://github.com/Innsaute-glitch/Guess-the-number-game.git
+cd Guess-the-number-game
+python "Guess-the-number-game.py"
 ```
 
 > **Tip:** You can also just download the `.py` file directly and run it!
