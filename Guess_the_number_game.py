@@ -20,7 +20,7 @@ time.sleep(0.5)
 while True:
     if attempts>0:
         try: # Used a try command with some help
-            guess = int(input("Guess the number:"))
+            guess = int(input("Guess the number: "))
             if guess>number:
                 print("⬆️ Your guess was too high ⬆️")
                 attempts -= 1
@@ -40,7 +40,7 @@ while True:
                     attempts -= 1
                     print(f"Number of attempts remaining: {attempts}/10") # Use an f string
                     time.sleep(0.5)
-            elif guess == number:
+            else:
                 print()
                 time.sleep(0.5)
                 print("Wait.. You did it!")
@@ -60,6 +60,5 @@ while True:
         print(f"The number was: {number}") # Print the number
         print("🙌 Thanks for playing 🙌")
         break # Break the loop (again)
-
 # Add an empty line at the end
 print()
