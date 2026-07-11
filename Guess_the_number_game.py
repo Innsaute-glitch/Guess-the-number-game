@@ -8,6 +8,10 @@ print("""Random Number set successfully!!
 attempts = 10 # Set the variables
 cheat_use = 0
 inter = 0
+Starting = "y"
+CURSOR_UP = '\033[1A'
+CLEAR = '\x1b[2K'
+CLEAR_LINE = CURSOR_UP + CLEAR
 
 
 # Set up a loop
@@ -36,9 +40,10 @@ def play(): # Put this as a function (Optimised after a few days)
                         print()
                         print("⋆⭒˚.⋆ ⟡ ݁₊ . Cheat code Activated!! ⟡ ݁₊ . ⋆⭒˚.⋆")
                         time.sleep(0.5)
-                        print(f"The number is {number}") # Reveal the number
+                        print(f"The number is {number} (This will get erased in 2 seconds)") # Reveal the number
                         cheat_use = 1
-                        print()
+                        time.sleep(2)
+                        print(CLEAR_LINE * 4, end='')
                     else:
                         print("⬇️ Your guess was too low ⬇️")
                         attempts -= 1
@@ -65,7 +70,6 @@ def play(): # Put this as a function (Optimised after a few days)
             print("🙌 Thanks for playing 🙌\n")
             break # Break the loop (again)
 
-Starting = "y"
 while True:
     try:
         if Starting == "y" and inter == 0:
