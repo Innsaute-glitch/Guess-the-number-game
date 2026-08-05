@@ -103,7 +103,7 @@ CLEAR = '\x1b[2K'
 CLEAR_LINE = CURSOR_UP + CLEAR
 
 # Define the main function to take the user input and run the game
-def get_play():
+def get_guess():
     while True:
         time.sleep(0.5)
         val = input(">>> What is the number you are guessing? ")
@@ -114,7 +114,7 @@ def get_play():
             print("\t⚠️ This isn't a valid integer!")
 
 # Define the function to get minimum and maximum numbers to be considered for solution by the user + set the solution
-def get_sol():
+def get_solution():
     while True:
         while True:
             try:
@@ -147,7 +147,7 @@ def get_sol():
 
 # Define the main function to run the game
 def game():
-    sol = get_sol()
+    sol = get_solution()
     cheat_use = 0
     tries = 0
     if sol != "KeyInt": # No KeyInt detected. Else: Do Nothing
@@ -167,7 +167,7 @@ def game():
     while sol != "KeyInt": # Run the game if KeyInt is not detected. Else: Do Nothing
         if tries < tries_final: # Run till all the tries are exhausted
             try:
-                ans = get_play()
+                ans = get_guess()
                 if ans == sol:
                     print("🎊 You guessed it successfully 🎊")
                     time.sleep(0.5)
@@ -212,6 +212,7 @@ KeyInt_check = game()
 while KeyInt_check != "KeyInt": # Run the game till the user presses Ctrl+C. Else: Do Nothing
     if KeyInt_check == "Invalid_Tries":
         games_played -= 1 # Invalid tries should not be counted as a game played
+        KeyInt_check = None
     try:
         try_again = input("Do you want to try again? (y/n): ")
         if try_again.lower() == "y":
