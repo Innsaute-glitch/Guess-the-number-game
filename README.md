@@ -1,14 +1,13 @@
 # 🎯 Number Guessing Game
 
-A fun terminal-based number guessing game written in Python. Made as a Day 2 Python learning project!
-(My first attempt at building something fun while learning python)
+A fun terminal-based number guessing game written in Python. Made as a Day 2 Python learning project! (And later refined as I learnt more)
 
 ---
 
 ## 🕹️ How to Play
 
-1. The game picks a random number between **0 and 100**
-2. You have **10 attempts** to guess it
+1. The game picks a random number between **a range defined by you**.
+2. You have **as many attempts as you wish to take** to guess it.
 3. After each guess, you'll be told if your guess was too **high** or too **low**
 4. Guess it right and you win! Run out of attempts and it's game over 💀
 
@@ -20,7 +19,7 @@ A fun terminal-based number guessing game written in Python. Made as a Day 2 Pyt
 - ⬆️⬇️ High/Low hints after every guess
 - 📊 Attempt counter so you always know how many you have left
 - ⚠️ Input validation — typing non-integers won't crash the game
-- 🏆 Tells you how many tries it took when you win
+- 🏆 Tells you how many tries it took when you win and a game log showing how many you won vs lost.
 - 🤫 A secret cheat code...
 
 ---
@@ -46,20 +45,9 @@ python "Guess-the-number-game.py"
 
 ## 🛠️ Built With
 
-- [Python 3](https://www.python.org/)
+- [Python](https://www.python.org/) ofc
 - `random` — For generating the secret number
 - `time` — For those dramatic pauses
-
----
-
-## 🧠 What I Learned Building This
-
-- `while` loops and `break` conditions
-- `if / elif / else` branching
-- f-strings for dynamic output
-- `try / except` for error handling (with some help)
-- Using modules (`random`, `time`)
-- Tracking game state with variables
 
 ---
 
