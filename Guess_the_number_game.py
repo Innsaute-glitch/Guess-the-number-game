@@ -8,6 +8,7 @@ CURSOR_UP = '\033[1A'
 CLEAR = '\x1b[2K'
 CLEAR_LINE = CURSOR_UP + CLEAR
 CODE = DEFAULT = -1541
+NUMBER = 3 # Number of times the user can enter invalid input before a warning is displayed. (Written here for ease of access)
 
 # Prompt the user for integer input and handle invalid inputs and KeyboardInterrupts
 def get_integer_input(prompt):
@@ -87,6 +88,7 @@ def game():
 start = False
 while True:
     try:
+        counter = 0
         game_log.append(game())
         while True:
             try_again = input("Do you want to try again? (y/n): ").strip().lower()
@@ -97,13 +99,13 @@ while True:
                 print("Your game log was:", game_log)
                 print(f"--- Exiting the script successfully ... ---\n🙌 Thanks for playing 🙌")
                 break
-            elif try_again == "s":
+            elif try_again == "s" and counter >= NUMBER:
                 while True:
                     try:
                         CODE = input(">>> What would you like to set the cheat code as? (r to reset, type number to change): ").strip()
                         if CODE == 'r':
                             CODE = DEFAULT
-                            print(">>> Code Reset Successful!")
+                            print(">>> Code Reset Successful! Reset to -1541 (Original Default)")
                             break
                         if not CODE.isdigit():
                             print("\t⚠️ Invalid input! Please enter a valid number or 'r' to reset the cheat code.")
@@ -115,11 +117,14 @@ while True:
                         print(f"⚠️ Error encountered: {e}. Please try again")
                 continue
             else:
-                print("\t⚠️ Invalid input! Please enter 'y' or 'n' (Tip: Type 's' for changing the cheat code...)")
-
+                counter += 1
+                if counter >= NUMBER:
+                    print("\t⚠️ Invalid input! Please enter 'y' or 'n' (Tip: Type 's' for changing the cheat code...)")
+                else:
+                    print("\t⚠️ Invalid input! Please enter 'y' or 'n'!")
         if try_again == "y":
             continue
-        break
+        break # If the user doesn't want to try again, exit the loop and end the game
     except KeyboardInterrupt:
             print()
             print("\t⚠️ A KeyboardInterrupt was detected!")
