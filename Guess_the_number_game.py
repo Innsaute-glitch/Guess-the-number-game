@@ -7,7 +7,7 @@ game_log = []
 CURSOR_UP = '\033[1A'
 CLEAR = '\x1b[2K'
 CLEAR_LINE = CURSOR_UP + CLEAR
-CODE = -1541
+CODE = DEFAULT = -1541
 
 # Prompt the user for integer input and handle invalid inputs and KeyboardInterrupts
 def get_integer_input(prompt):
@@ -16,11 +16,6 @@ def get_integer_input(prompt):
             return int(input(prompt))
         except ValueError:
             print("\t⚠️ This isn't a valid integer!")
-        except KeyboardInterrupt:
-            print()
-            print("⚠️ A KeyboardInterrupt was detected!")
-            game_log.append("Game_Interrupted")
-            raise
 
 # Define the function to get minimum and maximum numbers to be considered for solution by the user + set the solution
 def get_solution():
@@ -50,7 +45,7 @@ def game():
             print(f"No.. wait! How can the game be started this way?!\nLemme check... number of tries is {total_tries}...\nAh man. Really now? 0 tries huh? (ᵕ—ᴗ—)\n")
         elif total_tries < 0:
             print(CLEAR_LINE, end='')
-            print(f"No.. wait! How can the game be started in this way?!\nLemme check... number of tries is {total_tries}...Negative tries? For real? Atleast grace me with a 0 next time, I guess? (つ╥﹏╥)つ\n")
+            print(f"No.. wait! How can the game be started in this way?!\nLemme check... number of tries is {total_tries}\n...Negative tries? For real? Atleast grace me with a 0 next time, I guess? (つ╥﹏╥)つ\n")
     print("\n--- Starting the guessing game... ---")
     while True:
         if tries < total_tries: # Run till all the tries are exhausted
@@ -68,13 +63,19 @@ def game():
                 time.sleep(2)
                 print(CLEAR_LINE * 5, end='') # Clear cheat code message, number and evidence from the screen
             elif ans == CODE and cheat_use == True:
-                print("⚠️ Cheat code has already been used!")
+                print("\t⚠️ Cheat code has already been used!")
             elif ans > solution:
                 tries += 1
-                print(f"⬆️ Your guess was too high ⬆️ ({total_tries - tries}/{total_tries} more attempts remaining)")
+                if total_tries - tries != 0:
+                    print(f"⬆️ Your guess was too high ⬆️ ({total_tries - tries} of {total_tries} more attempt(s) remaining)")
+                else:
+                    print(f"⬆️ Your guess was too high ⬆️")
             elif ans < solution:
                 tries += 1
-                print(f"⬇️ Your guess was too low ⬇️ ({total_tries - tries}/{total_tries} more attempts remaining)")
+                if total_tries - tries != 0:
+                    print(f"⬇️ Your guess was too low ⬇️ ({total_tries - tries} of {total_tries} more attempts remaining)")
+                else:
+                    print(f"⬇️ Your guess was too low ⬇️")
         else:
             time.sleep(0.2)
             print(f"\n💔 Attempts Exhausted... The answer was {solution}.")
@@ -83,24 +84,52 @@ def game():
             return "Game_Lost"
 
 # Core of the script to run the game and handle KeyboardInterrupts and user input for replaying the game. Using all the defined functions and variables here!
-try:
-        game_log.append(game())
-        start = False
-except KeyboardInterrupt:
-    print("Your game log was:", game_log)
-    print("Exiting Successfully... Thanks for playing!")
+start = False
 while True:
     try:
-        try_again = input("Do you want to try again? (y/n): ")
-        if try_again.lower() == "y":
-            game_log.append(game())
-        elif try_again.lower() == "n":
-            print("Your game log was:", game_log)
-            print(f"--- Exiting the script successfully ... ---\n🙌 Thanks for playing 🙌")
-            break
-        else:
-            print("\n⚠️ Invalid input! Please enter 'y' or 'n'.")
+        game_log.append(game())
+        while True:
+            try_again = input("Do you want to try again? (y/n): ").strip().lower()
+            if try_again == "y":
+                print("\n--- Starting a new game ---\n")
+                break
+            elif try_again == "n":
+                print("Your game log was:", game_log)
+                print(f"--- Exiting the script successfully ... ---\n🙌 Thanks for playing 🙌")
+                break
+            elif try_again == "s":
+                while True:
+                    try:
+                        CODE = input(">>> What would you like to set the cheat code as? (r to reset, type number to change): ").strip()
+                        if CODE == 'r':
+                            CODE = DEFAULT
+                            print(">>> Code Reset Successful!")
+                            break
+                        if not CODE.isdigit():
+                            print("\t⚠️ Invalid input! Please enter a valid number or 'r' to reset the cheat code.")
+                            continue
+                        CODE = int(CODE)
+                        print(">>> New cheat code implemented successfully!")
+                        break
+                    except Exception as e:
+                        print(f"⚠️ Error encountered: {e}. Please try again")
+                continue
+            else:
+                print("\t⚠️ Invalid input! Please enter 'y' or 'n' (Tip: Type 's' for changing the cheat code...)")
+
+        if try_again == "y":
+            continue
+        break
     except KeyboardInterrupt:
+            print()
+            print("\t⚠️ A KeyboardInterrupt was detected!")
+            game_log.append("KeyInt_Detected")
             print("Your game log was:", game_log)
             print("Exiting Successfully... Thanks for playing!")
             break
+    except EOFError:
+        print("\n⚠️ No more input was available. Exiting...")
+        game_log.append("EOF_Detected")
+        print("Your game log was:", game_log)
+        print("Exiting Successfully... Thanks for playing!")
+        break
